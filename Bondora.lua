@@ -65,14 +65,20 @@ function RefreshAccount (account, since)
 
   local value = summary.Stats[1].ValueTooltip
   local profit = summary.Stats[2].ValueTooltip
-  profit = string.gsub(profit, "[^%d]", "")
-  value = string.gsub(value, "[^%d]", "")
+
+  value = string.gsub(value, "[^%d,]", "")
+  value = string.gsub(value , ",", ".")
+  value = tonumber(value)
+
+  profit = string.gsub(profit, "[^%d,]", "")
+  profit = string.gsub(profit , ",", ".")
+  profit = tonumber(profit)
 
   local security = {
     name = "Account",
-    price = tonumber(value)/100,
+    price = value,
     quantity = 1,
-    purchasePrice = tonumber(value)/100 - tonumber(profit)/100,
+    purchasePrice = value - profit,
     curreny = nil,
   }
 
